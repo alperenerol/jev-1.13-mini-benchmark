@@ -1,0 +1,70 @@
+{
+  "name": "jev-1.13-mini-bench",
+  "version": "1.0",
+  "domain": "support_triage",
+  "notes": "Labels are author-assigned ground truth. 'clear': true = label follows strongly from the text; false = borderline judgment call. Criterion wording fixes the label semantics.",
+  "question_specs": {
+    "is_urgent": {
+      "type": "noul",
+      "instructions": "Does this message require action within the next few hours?",
+      "criteria": {
+        "true": "Ongoing harm, outage, deadline today or tomorrow, or the writer explicitly needs immediate action",
+        "false": "The matter can reasonably wait a day or more; no stated deadline and no active harm"
+      }
+    },
+    "department": {
+      "type": "choice",
+      "instructions": "Which team should handle this message?",
+      "criteria": {
+        "billing": "Payments, invoices, refunds, charges, plan or subscription changes",
+        "technical": "Bugs, outages, errors, integrations, product not working",
+        "sales": "Pricing questions for new or larger purchases, demos, enterprise evaluation",
+        "other": "Requests that fit none of the other teams, such as data export or account closure logistics"
+      }
+    },
+    "frustration": {
+      "type": "score",
+      "instructions": "How frustrated is the writer?",
+      "criteria": ["Calm", "Frustrated", "Very angry"]
+    }
+  },
+  "cases": [
+    {"id": "noul_01", "lang": "en", "state": "Our production API has been returning 500 errors for the last hour. Customers are affected right now.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": true, "clear": true}}},
+    {"id": "noul_02", "lang": "en", "state": "Hi, I'd like to know whether my plan renews automatically next month. No rush at all.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": false, "clear": true}}},
+    {"id": "noul_03", "lang": "en", "state": "I was charged twice this month. Please refund the duplicate - this is the second time I am writing about it.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": true, "clear": false}}},
+    {"id": "noul_04", "lang": "en", "state": "Could you extend my trial by a week? We are deciding between you and a competitor by Friday.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": true, "clear": false}}},
+    {"id": "noul_05", "lang": "en", "state": "Loving the product! One small idea: dark mode would be nice someday.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": false, "clear": true}}},
+    {"id": "noul_06", "lang": "en", "state": "My card expires tomorrow and the billing portal rejects the new one, so payments will start failing.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": true, "clear": true}}},
+    {"id": "noul_07", "lang": "en", "state": "Just checking in on the status of the feature request I filed last quarter.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": false, "clear": true}}},
+    {"id": "noul_08", "lang": "en", "state": "Our whole team is locked out since the password change this morning.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": true, "clear": true}}},
+    {"id": "noul_09", "lang": "en", "state": "Whenever you have a moment, could you double-check the March invoice? Something looks slightly off.", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": false, "clear": true}}},
+    {"id": "noul_10", "lang": "tr", "state": "Merhaba, faturamda küçük bir tutar farkı gördüm, müsait olduğunuzda bakabilir misiniz?", "questions": {"is_urgent": "spec"}, "expected": {"is_urgent": {"label": false, "clear": true}}},
+
+    {"id": "dept_01", "lang": "en", "state": "I need a VAT invoice for our accountant with our company registration number on it.", "questions": {"department": "spec"}, "expected": {"department": {"label": "billing", "clear": true}}},
+    {"id": "dept_02", "lang": "en", "state": "The mobile app crashes every time I open the settings screen.", "questions": {"department": "spec"}, "expected": {"department": {"label": "technical", "clear": true}}},
+    {"id": "dept_03", "lang": "en", "state": "Do you offer a discount if we move from 10 to 50 seats?", "questions": {"department": "spec"}, "expected": {"department": {"label": "sales", "clear": true}}},
+    {"id": "dept_04", "lang": "en", "state": "My payout from last Tuesday still hasn't arrived.", "questions": {"department": "spec"}, "expected": {"department": {"label": "billing", "clear": true}}},
+    {"id": "dept_05", "lang": "en", "state": "Integration with Slack fails with a 403 error during the OAuth handshake.", "questions": {"department": "spec"}, "expected": {"department": {"label": "technical", "clear": true}}},
+    {"id": "dept_06", "lang": "en", "state": "Can I switch my annual plan to monthly, and what happens to the difference I already paid?", "questions": {"department": "spec"}, "expected": {"department": {"label": "billing", "clear": false}}},
+    {"id": "dept_07", "lang": "en", "state": "We are evaluating tools for our new compliance team; can someone walk us through the enterprise features?", "questions": {"department": "spec"}, "expected": {"department": {"label": "sales", "clear": true}}},
+    {"id": "dept_08", "lang": "en", "state": "How do I export all my data before closing my account?", "questions": {"department": "spec"}, "expected": {"department": {"label": "other", "clear": false}}},
+    {"id": "dept_09", "lang": "tr", "state": "Kredi kartıma yanlış tutar yansıdı, iade bekliyorum.", "questions": {"department": "spec"}, "expected": {"department": {"label": "billing", "clear": true}}},
+    {"id": "dept_10", "lang": "en", "state": "The dashboard shows my usage as zero although I ran forty thousand requests yesterday.", "questions": {"department": "spec"}, "expected": {"department": {"label": "technical", "clear": true}}},
+
+    {"id": "frus_01", "lang": "en", "state": "Quick question - where can I find the API logs?", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 0, "clear": true}}},
+    {"id": "frus_02", "lang": "en", "state": "This is the third time I am writing about the same refund. Nobody has replied for two weeks.", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 1, "clear": false}}},
+    {"id": "frus_03", "lang": "en", "state": "Your support is a joke. I have been on hold for an hour and the chat just closed itself. Unbelievable.", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 2, "clear": true}}},
+    {"id": "frus_04", "lang": "en", "state": "Thanks for the quick fix last time! Now, small thing: the export button seems mislabeled.", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 0, "clear": true}}},
+    {"id": "frus_05", "lang": "en", "state": "I am honestly getting tired of this. The same error keeps coming back after every so-called fix.", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 1, "clear": true}}},
+    {"id": "frus_06", "lang": "en", "state": "Are you serious? You deleted my workspace without any warning and now you send me a marketing email?", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 2, "clear": true}}},
+    {"id": "frus_07", "lang": "en", "state": "Mildly annoying that the app logs me out daily, but otherwise all good.", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 0, "clear": false}}},
+    {"id": "frus_08", "lang": "tr", "state": "Üç haftadır cevap alamadım, bu gerçekten kabul edilemez.", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 2, "clear": false}}},
+    {"id": "frus_09", "lang": "en", "state": "Hey, no worries if this takes a while - just flagging a small billing hiccup.", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 0, "clear": true}}},
+    {"id": "frus_10", "lang": "en", "state": "I have calmed down after the fix, thanks for sorting it out eventually.", "questions": {"frustration": "spec"}, "expected": {"frustration": {"label": 0, "clear": true}}},
+
+    {"id": "comp_01", "lang": "en", "state": "URGENT: our checkout is down since 9am, Black Friday traffic is arriving and we are losing orders by the minute. This is the second outage this month and frankly we are furious.", "questions": {"is_urgent": "spec", "department": "spec", "frustration": "spec"}, "expected": {"is_urgent": {"label": true, "clear": true}, "department": {"label": "technical", "clear": true}, "frustration": {"label": 2, "clear": true}}},
+    {"id": "comp_02", "lang": "en", "state": "Hello, could you send me the receipt for my October payment when convenient? Bookkeeping asked for it. No rush at all.", "questions": {"is_urgent": "spec", "department": "spec", "frustration": "spec"}, "expected": {"is_urgent": {"label": false, "clear": true}, "department": {"label": "billing", "clear": true}, "frustration": {"label": 0, "clear": true}}},
+    {"id": "comp_03", "lang": "en", "state": "Hi, we are comparing you with two competitors for our eighty-person team this week and need the security questionnaire filled out by Thursday to stay in the running.", "questions": {"is_urgent": "spec", "department": "spec", "frustration": "spec"}, "expected": {"is_urgent": {"label": true, "clear": true}, "department": {"label": "sales", "clear": true}, "frustration": {"label": 0, "clear": true}}},
+    {"id": "comp_04", "lang": "tr", "state": "Uygulama yine çöktü, dördüncü kez. Artık gerçekten bıktım, ya çözün ya da aboneliğimi iptal edin.", "questions": {"is_urgent": "spec", "department": "spec", "frustration": "spec"}, "expected": {"is_urgent": {"label": true, "clear": true}, "department": {"label": "technical", "clear": true}, "frustration": {"label": 1, "clear": false}}}
+  ]
+}
