@@ -35,6 +35,41 @@ or a position on an ordered rubric (`score`). No free text is generated.
 - **No keys in the repo.** The runner reads the OpenRouter key from the local machine's
   auth store at runtime.
 
+## Laya comparison (local, English cases)
+
+Ran the same 30 English cases through [Laya](https://github.com/NandhaKishorM/laya)
+(`convaiinnovations/laya` base checkpoint, Apache 2.0, self-hosted on Apple M1 Pro)
+with `run_laya.py` — same dataset, same labels, two runs.
+
+| | Laya (local, base ckpt) | Jev 1.13 (API) |
+|---|---|---|
+| noul accuracy @0.5 | **0.833** (10/12) | 0.750 (9/12) |
+| choice accuracy | 0.750 (9/12) | **1.000** (12/12) |
+| score MAE | 0.436 | **0.087** |
+| score exact (rounded) | 7/12 | **12/12** |
+| consistency (mean \|Δp\|) | **0.000** (fully deterministic) | 0.004 |
+| latency warm | **~50 ms/case** (all questions, one forward pass) | ~400 ms/case |
+| cost | **$0 self-hosted** | ~$0.016 / 1k decisions |
+
+Reading:
+
+- **Laya's noul is competitive** (slightly ahead on our labels) but its probabilities are
+  softer (pos mean 0.73 vs Jev's 0.94) — threshold placement matters more.
+- **Laya's choice weakness is real but detectable**: all 3 misses (sales-vs-other boundary,
+  one technical case) came with confidence < 0.03 and flat distributions, while the worst
+  confident hit sat at 0.12 — a trivial confidence gate catches every miss at the cost of
+  a few escalations. Jev routed perfectly with no gating.
+- **Laya's score primitive regresses to the middle** (angry → ~1.1, calm → ~1.0); the base
+  checkpoint is not fine-tuned for ordinal scoring. Jev's continuous scores were near-perfect.
+- **Determinism**: Laya is bit-exact across runs on the same machine; Jev drifts ±0.004.
+- Both engines miss the same two borderline noul cases (trial-deadline, Thursday-deadline) —
+  those are label/wording disagreements, not engine failures.
+
+Verdict: for English triage, Jev is the better zero-shot decision engine out of the box
+(choice + score especially); Laya is free, ~8× faster, bit-deterministic, self-hosted —
+and its misses are gateable by its own confidence. Fine-tuning (their Kaggle recipe) is
+the documented path to close the gap.
+
 ## Usage
 
 ```bash
