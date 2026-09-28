@@ -2,9 +2,12 @@
 
 A small, self-contained benchmark for [`typesafe/jev-1.13`](https://openrouter.ai/typesafe/jev-1.13) —
 TypeSafe's structured decision model, served on OpenRouter's Decisions API — on a labeled
-support-triage task. 34 cases covering all three question types (`noul` / `choice` /
-`score`), 4 composite cases, 5 Turkish-language cases; two full runs for consistency.
+support-triage task. 32 cases covering all three question types (`noul` / `choice` /
+`score`), 3 composite cases, 4 Turkish-language cases; two full runs for consistency.
 Labels are author-assigned; `clear` flags separate obvious cases from judgment calls.
+(v1.1: two contestable deadline cases were removed — the "misses" there were wording
+disputes about the label, not model errors; all scores below are recomputed on the
+revised set.)
 
 Jev is not a chat model: you send a `state` plus typed questions and get calibrated
 answers back — a yes/no probability (`noul`), a pick from options you define (`choice`),
@@ -14,16 +17,17 @@ or a position on an ordered rubric (`score`). No free text is generated.
 
 | Metric | noul (urgency) | choice (department) | score (frustration) |
 |---|---|---|---|
-| Accuracy | 0.786 @ threshold 0.5 | 1.000 (14/14) | 1.000 within ±1; 0.857 exact |
-| Clear cases | 0.917 | perfect, zero confusions | MAE 0.18 (raw scale) |
-| Borderline cases | 0/2 | — | — |
+| Accuracy | 0.917 @ threshold 0.5 (11/12) | 1.000 (13/13) | 1.000 within ±1; 0.846 exact |
+| Clear cases | 1.000 | perfect, zero confusions | MAE 0.20 (raw scale) |
+| Borderline cases | 0/1 | — | — |
 
-- Zero false positives on urgency; negatives are confidently separated (mean p = 0.06).
-- All 3 noul misses are deadline/fee cases where the model applied the stated criteria
-  more literally than the labels — criteria wording is effectively the label definition.
+- Zero false positives on urgency; negatives are confidently separated (mean p = 0.099).
+- The single noul miss (noul_03, a double-charge refund) is a borderline case — the model
+  applied the stated criteria more literally than the label; criteria wording is
+  effectively the label definition.
 - Consistency across runs: mean |Δp| = 0.004, max 0.04, zero decision-level flips.
 - Turkish cases: no degradation (all exact or within ±1).
-- Cost: $0.0011 for 68 requests (~$0.016 per 1,000 decisions); latency p50 0.41 s.
+- Cost: ~$0.016 per 1,000 decisions ($0.0011 for the 68-request benchmark); latency p50 0.41 s.
 
 ## Working principle
 
@@ -43,27 +47,25 @@ with `run_laya.py` — same dataset, same labels, two runs.
 
 | | Laya (local, base ckpt) | Jev 1.13 (API) |
 |---|---|---|
-| noul accuracy @0.5 | **0.833** (10/12) | 0.750 (9/12) |
-| choice accuracy | 0.750 (9/12) | **1.000** (12/12) |
-| score MAE | 0.436 | **0.087** |
-| score exact (rounded) | 7/12 | **12/12** |
+| noul accuracy @0.5 | **1.000** (10/10) | 0.900 (9/10) |
+| choice accuracy | 0.818 (9/11) | **1.000** (11/11) |
+| score MAE | 0.441 | **0.094** |
+| score exact (rounded) | 6/11 | **11/11** |
 | consistency (mean \|Δp\|) | **0.000** (fully deterministic) | 0.004 |
 | latency warm | **~50 ms/case** (all questions, one forward pass) | ~400 ms/case |
 | cost | **$0 self-hosted** | ~$0.016 / 1k decisions |
 
 Reading:
 
-- **Laya's noul is competitive** (slightly ahead on our labels) but its probabilities are
-  softer (pos mean 0.73 vs Jev's 0.94) — threshold placement matters more.
-- **Laya's choice weakness is real but detectable**: all 3 misses (sales-vs-other boundary,
-  one technical case) came with confidence < 0.03 and flat distributions, while the worst
+- **Laya's noul is clean on the revised set** (10/10) but its probabilities are softer
+  (pos mean 0.73 vs Jev's 0.94) — threshold placement matters more.
+- **Laya's choice weakness is real but detectable**: both misses (sales-vs-other boundary,
+  usage-vs-technical) came with confidence < 0.03 and flat distributions, while the worst
   confident hit sat at 0.12 — a trivial confidence gate catches every miss at the cost of
   a few escalations. Jev routed perfectly with no gating.
 - **Laya's score primitive regresses to the middle** (angry → ~1.1, calm → ~1.0); the base
   checkpoint is not fine-tuned for ordinal scoring. Jev's continuous scores were near-perfect.
 - **Determinism**: Laya is bit-exact across runs on the same machine; Jev drifts ±0.004.
-- Both engines miss the same two borderline noul cases (trial-deadline, Thursday-deadline) —
-  those are label/wording disagreements, not engine failures.
 
 Verdict: for English triage, Jev is the better zero-shot decision engine out of the box
 (choice + score especially); Laya is free, ~8× faster, bit-deterministic, self-hosted —

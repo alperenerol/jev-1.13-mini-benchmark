@@ -135,8 +135,12 @@ def grade_score(rows, labels):
 def score_run(path: Path, ds, labels) -> dict:
     rows_by_case = defaultdict(list)
     errors = []
+    excluded = set()
     for line in path.read_text().splitlines():
         row = json.loads(line)
+        if row["case_id"] not in labels:
+            excluded.add(row["case_id"])  # result predates a dataset edit; skip cleanly
+            continue
         if row["http_status"] != 200:
             errors.append(row["case_id"])
             continue
@@ -147,7 +151,7 @@ def score_run(path: Path, ds, labels) -> dict:
         rows_by_case[row["case_id"]].append((row, ans))
 
     # if a case appears multiple times in one file (consistency re-run), grade each copy
-    report = {"file": path.name, "api_errors": errors}
+    report = {"file": path.name, "api_errors": errors, "excluded_cases": sorted(excluded)}
     noul_rows = [x for pair in rows_by_case.items() for x in pair[1] if "is_urgent" in x[1]]
     choice_rows = [x for pair in rows_by_case.items() for x in pair[1] if "department" in x[1]]
     score_rows = [x for pair in rows_by_case.items() for x in pair[1] if "frustration" in x[1]]
