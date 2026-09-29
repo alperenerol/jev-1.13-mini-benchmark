@@ -1,0 +1,908 @@
+{
+ "file": "laya-run-4.jsonl",
+ "api_errors": [],
+ "excluded_cases": [],
+ "questions": {
+  "is_urgent": {
+   "type": "noul",
+   "count": 10,
+   "accuracy@0.5": 1.0,
+   "threshold_sweep": {
+    "0.3": 0.9,
+    "0.4": 1.0,
+    "0.5": 1.0,
+    "0.6": 0.9,
+    "0.7": 0.7
+   },
+   "best_threshold": 0.4,
+   "pos_mean": 0.726,
+   "neg_mean": 0.213,
+   "fp@0.5": [],
+   "fn@0.5": [],
+   "clear_acc@0.5": 1.0,
+   "borderline_acc@0.5": 1.0,
+   "sorted_probs": [
+    [
+     "comp_01",
+     0.894,
+     1
+    ],
+    [
+     "noul_06",
+     0.791,
+     1
+    ],
+    [
+     "noul_08",
+     0.695,
+     1
+    ],
+    [
+     "noul_01",
+     0.654,
+     1
+    ],
+    [
+     "noul_03",
+     0.597,
+     1
+    ],
+    [
+     "noul_09",
+     0.357,
+     0
+    ],
+    [
+     "comp_02",
+     0.227,
+     0
+    ],
+    [
+     "noul_07",
+     0.201,
+     0
+    ],
+    [
+     "noul_05",
+     0.198,
+     0
+    ],
+    [
+     "noul_02",
+     0.084,
+     0
+    ]
+   ]
+  },
+  "department": {
+   "type": "choice",
+   "count": 11,
+   "accuracy": 0.818,
+   "per_class": {
+    "billing": "4/4",
+    "other": "1/1",
+    "sales": "1/2",
+    "technical": "3/4"
+   },
+   "confusions": {
+    "sales->other": 1,
+    "technical->other": 1
+   },
+   "misses": [
+    {
+     "case": "dept_07",
+     "label": "sales",
+     "got": "other",
+     "probs": {
+      "billing": 0.2779,
+      "technical": 0.1927,
+      "sales": 0.2088,
+      "other": 0.3207
+     }
+    },
+    {
+     "case": "dept_10",
+     "label": "technical",
+     "got": "other",
+     "probs": {
+      "billing": 0.2922,
+      "technical": 0.2332,
+      "sales": 0.1473,
+      "other": 0.3273
+     }
+    }
+   ]
+  },
+  "frustration": {
+   "type": "score",
+   "count": 11,
+   "accuracy_within_1": 1.0,
+   "exact_match_rounded": 0.545,
+   "mae_raw": 0.441,
+   "error_distribution_rounded": {
+    "-1": 2,
+    "0": 6,
+    "1": 3
+   },
+   "miss_examples": []
+  },
+  "route_target": {
+   "type": "choice",
+   "count": 56,
+   "accuracy": 0.196,
+   "per_class": {
+    "billing_specialist": "1/9",
+    "escalation_human": "3/12",
+    "refuse_out_of_scope": "0/10",
+    "self_handle": "7/10",
+    "technical_specialist": "0/3",
+    "triage_agent": "0/12"
+   },
+   "confusions": {
+    "technical_specialist->self_handle": 2,
+    "billing_specialist->refuse_out_of_scope": 2,
+    "escalation_human->refuse_out_of_scope": 3,
+    "triage_agent->self_handle": 9,
+    "escalation_human->self_handle": 5,
+    "self_handle->billing_specialist": 2,
+    "billing_specialist->self_handle": 6,
+    "self_handle->refuse_out_of_scope": 1,
+    "refuse_out_of_scope->self_handle": 10,
+    "technical_specialist->billing_specialist": 1,
+    "triage_agent->billing_specialist": 3,
+    "escalation_human->billing_specialist": 1
+   },
+   "misses": [
+    {
+     "case": "rt_sel_01",
+     "label": "technical_specialist",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0399,
+      "technical_specialist": 0.1498,
+      "billing_specialist": 0.0079,
+      "escalation_human": 0.0244,
+      "self_handle": 0.6497,
+      "refuse_out_of_scope": 0.1284
+     }
+    },
+    {
+     "case": "rt_sel_02",
+     "label": "billing_specialist",
+     "got": "refuse_out_of_scope",
+     "probs": {
+      "triage_agent": 0.0278,
+      "technical_specialist": 0.0127,
+      "billing_specialist": 0.3151,
+      "escalation_human": 0.018,
+      "self_handle": 0.1998,
+      "refuse_out_of_scope": 0.4266
+     }
+    },
+    {
+     "case": "rt_sel_03",
+     "label": "escalation_human",
+     "got": "refuse_out_of_scope",
+     "probs": {
+      "triage_agent": 0.0898,
+      "technical_specialist": 0.1481,
+      "billing_specialist": 0.0098,
+      "escalation_human": 0.0834,
+      "self_handle": 0.3207,
+      "refuse_out_of_scope": 0.3482
+     }
+    },
+    {
+     "case": "rt_sel_08",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0475,
+      "technical_specialist": 0.0203,
+      "billing_specialist": 0.018,
+      "escalation_human": 0.0312,
+      "self_handle": 0.5613,
+      "refuse_out_of_scope": 0.3219
+     }
+    },
+    {
+     "case": "rt_sel_09",
+     "label": "escalation_human",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.1268,
+      "technical_specialist": 0.073,
+      "billing_specialist": 0.0544,
+      "escalation_human": 0.1226,
+      "self_handle": 0.3726,
+      "refuse_out_of_scope": 0.2505
+     }
+    },
+    {
+     "case": "rt_sel_10",
+     "label": "self_handle",
+     "got": "billing_specialist",
+     "probs": {
+      "triage_agent": 0.0243,
+      "technical_specialist": 0.014,
+      "billing_specialist": 0.3974,
+      "escalation_human": 0.0097,
+      "self_handle": 0.1915,
+      "refuse_out_of_scope": 0.363
+     }
+    },
+    {
+     "case": "rt_sel_11",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.1786,
+      "technical_specialist": 0.042,
+      "billing_specialist": 0.1101,
+      "escalation_human": 0.045,
+      "self_handle": 0.5506,
+      "refuse_out_of_scope": 0.0738
+     }
+    },
+    {
+     "case": "rt_sel_12",
+     "label": "escalation_human",
+     "got": "refuse_out_of_scope",
+     "probs": {
+      "triage_agent": 0.059,
+      "technical_specialist": 0.0232,
+      "billing_specialist": 0.0165,
+      "escalation_human": 0.0196,
+      "self_handle": 0.3968,
+      "refuse_out_of_scope": 0.485
+     }
+    },
+    {
+     "case": "rt_sel_13",
+     "label": "billing_specialist",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0272,
+      "technical_specialist": 0.0069,
+      "billing_specialist": 0.2884,
+      "escalation_human": 0.0153,
+      "self_handle": 0.4597,
+      "refuse_out_of_scope": 0.2026
+     }
+    },
+    {
+     "case": "rt_tool_01",
+     "label": "self_handle",
+     "got": "billing_specialist",
+     "probs": {
+      "triage_agent": 0.0348,
+      "technical_specialist": 0.0248,
+      "billing_specialist": 0.5771,
+      "escalation_human": 0.0137,
+      "self_handle": 0.0988,
+      "refuse_out_of_scope": 0.2508
+     }
+    },
+    {
+     "case": "rt_tool_02",
+     "label": "billing_specialist",
+     "got": "refuse_out_of_scope",
+     "probs": {
+      "triage_agent": 0.0313,
+      "technical_specialist": 0.0208,
+      "billing_specialist": 0.1338,
+      "escalation_human": 0.0274,
+      "self_handle": 0.3197,
+      "refuse_out_of_scope": 0.467
+     }
+    },
+    {
+     "case": "rt_tool_03",
+     "label": "escalation_human",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0487,
+      "technical_specialist": 0.0221,
+      "billing_specialist": 0.0247,
+      "escalation_human": 0.0303,
+      "self_handle": 0.5488,
+      "refuse_out_of_scope": 0.3254
+     }
+    },
+    {
+     "case": "rt_tool_06",
+     "label": "billing_specialist",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0601,
+      "technical_specialist": 0.0206,
+      "billing_specialist": 0.2146,
+      "escalation_human": 0.0356,
+      "self_handle": 0.4242,
+      "refuse_out_of_scope": 0.2449
+     }
+    },
+    {
+     "case": "rt_tool_07",
+     "label": "self_handle",
+     "got": "refuse_out_of_scope",
+     "probs": {
+      "triage_agent": 0.0651,
+      "technical_specialist": 0.0178,
+      "billing_specialist": 0.053,
+      "escalation_human": 0.0388,
+      "self_handle": 0.401,
+      "refuse_out_of_scope": 0.4242
+     }
+    },
+    {
+     "case": "rt_tool_08",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0629,
+      "technical_specialist": 0.0469,
+      "billing_specialist": 0.0231,
+      "escalation_human": 0.0355,
+      "self_handle": 0.6181,
+      "refuse_out_of_scope": 0.2135
+     }
+    },
+    {
+     "case": "rt_tool_10",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0514,
+      "technical_specialist": 0.02,
+      "billing_specialist": 0.0197,
+      "escalation_human": 0.0544,
+      "self_handle": 0.671,
+      "refuse_out_of_scope": 0.1835
+     }
+    },
+    {
+     "case": "rt_back_01",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0409,
+      "technical_specialist": 0.2899,
+      "billing_specialist": 0.1044,
+      "escalation_human": 0.0154,
+      "self_handle": 0.3331,
+      "refuse_out_of_scope": 0.2162
+     }
+    },
+    {
+     "case": "rt_back_02",
+     "label": "technical_specialist",
+     "got": "billing_specialist",
+     "probs": {
+      "triage_agent": 0.0041,
+      "technical_specialist": 0.0087,
+      "billing_specialist": 0.9674,
+      "escalation_human": 0.0024,
+      "self_handle": 0.0053,
+      "refuse_out_of_scope": 0.0121
+     }
+    },
+    {
+     "case": "rt_back_03",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.052,
+      "technical_specialist": 0.0521,
+      "billing_specialist": 0.0277,
+      "escalation_human": 0.0197,
+      "self_handle": 0.7606,
+      "refuse_out_of_scope": 0.0879
+     }
+    },
+    {
+     "case": "rt_back_04",
+     "label": "escalation_human",
+     "got": "refuse_out_of_scope",
+     "probs": {
+      "triage_agent": 0.0818,
+      "technical_specialist": 0.1447,
+      "billing_specialist": 0.0358,
+      "escalation_human": 0.107,
+      "self_handle": 0.2307,
+      "refuse_out_of_scope": 0.4
+     }
+    },
+    {
+     "case": "rt_back_05",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0408,
+      "technical_specialist": 0.0397,
+      "billing_specialist": 0.0446,
+      "escalation_human": 0.0215,
+      "self_handle": 0.6942,
+      "refuse_out_of_scope": 0.1592
+     }
+    },
+    {
+     "case": "rt_back_06",
+     "label": "triage_agent",
+     "got": "billing_specialist",
+     "probs": {
+      "triage_agent": 0.0486,
+      "technical_specialist": 0.2668,
+      "billing_specialist": 0.2862,
+      "escalation_human": 0.0365,
+      "self_handle": 0.1237,
+      "refuse_out_of_scope": 0.2383
+     }
+    },
+    {
+     "case": "rt_back_08",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0199,
+      "technical_specialist": 0.009,
+      "billing_specialist": 0.011,
+      "escalation_human": 0.0117,
+      "self_handle": 0.8264,
+      "refuse_out_of_scope": 0.1221
+     }
+    },
+    {
+     "case": "rt_multi_02",
+     "label": "billing_specialist",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.031,
+      "technical_specialist": 0.02,
+      "billing_specialist": 0.1643,
+      "escalation_human": 0.0168,
+      "self_handle": 0.5294,
+      "refuse_out_of_scope": 0.2386
+     }
+    },
+    {
+     "case": "rt_multi_03",
+     "label": "billing_specialist",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0477,
+      "technical_specialist": 0.0312,
+      "billing_specialist": 0.0543,
+      "escalation_human": 0.0288,
+      "self_handle": 0.6277,
+      "refuse_out_of_scope": 0.2103
+     }
+    },
+    {
+     "case": "rt_multi_04",
+     "label": "billing_specialist",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0238,
+      "technical_specialist": 0.008,
+      "billing_specialist": 0.381,
+      "escalation_human": 0.0131,
+      "self_handle": 0.4386,
+      "refuse_out_of_scope": 0.1355
+     }
+    },
+    {
+     "case": "rt_multi_05",
+     "label": "escalation_human",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0638,
+      "technical_specialist": 0.0559,
+      "billing_specialist": 0.1486,
+      "escalation_human": 0.0338,
+      "self_handle": 0.6042,
+      "refuse_out_of_scope": 0.0938
+     }
+    },
+    {
+     "case": "rt_multi_07",
+     "label": "billing_specialist",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.049,
+      "technical_specialist": 0.0385,
+      "billing_specialist": 0.12,
+      "escalation_human": 0.0311,
+      "self_handle": 0.4224,
+      "refuse_out_of_scope": 0.3389
+     }
+    },
+    {
+     "case": "rt_multi_08",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.1376,
+      "technical_specialist": 0.0483,
+      "billing_specialist": 0.025,
+      "escalation_human": 0.051,
+      "self_handle": 0.65,
+      "refuse_out_of_scope": 0.0882
+     }
+    },
+    {
+     "case": "rt_join_01",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0693,
+      "technical_specialist": 0.0918,
+      "billing_specialist": 0.225,
+      "escalation_human": 0.0272,
+      "self_handle": 0.4609,
+      "refuse_out_of_scope": 0.1258
+     }
+    },
+    {
+     "case": "rt_join_02",
+     "label": "escalation_human",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0593,
+      "technical_specialist": 0.189,
+      "billing_specialist": 0.234,
+      "escalation_human": 0.0203,
+      "self_handle": 0.3626,
+      "refuse_out_of_scope": 0.1348
+     }
+    },
+    {
+     "case": "rt_join_03",
+     "label": "escalation_human",
+     "got": "billing_specialist",
+     "probs": {
+      "triage_agent": 0.0503,
+      "technical_specialist": 0.0658,
+      "billing_specialist": 0.5321,
+      "escalation_human": 0.0536,
+      "self_handle": 0.1396,
+      "refuse_out_of_scope": 0.1587
+     }
+    },
+    {
+     "case": "rt_join_04",
+     "label": "technical_specialist",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.099,
+      "technical_specialist": 0.095,
+      "billing_specialist": 0.0581,
+      "escalation_human": 0.0354,
+      "self_handle": 0.5192,
+      "refuse_out_of_scope": 0.1933
+     }
+    },
+    {
+     "case": "rt_join_05",
+     "label": "triage_agent",
+     "got": "billing_specialist",
+     "probs": {
+      "triage_agent": 0.0489,
+      "technical_specialist": 0.0114,
+      "billing_specialist": 0.7105,
+      "escalation_human": 0.0075,
+      "self_handle": 0.125,
+      "refuse_out_of_scope": 0.0968
+     }
+    },
+    {
+     "case": "rt_join_06",
+     "label": "triage_agent",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.1334,
+      "technical_specialist": 0.0247,
+      "billing_specialist": 0.0289,
+      "escalation_human": 0.0318,
+      "self_handle": 0.5824,
+      "refuse_out_of_scope": 0.1988
+     }
+    },
+    {
+     "case": "rt_join_07",
+     "label": "triage_agent",
+     "got": "billing_specialist",
+     "probs": {
+      "triage_agent": 0.1074,
+      "technical_specialist": 0.068,
+      "billing_specialist": 0.2992,
+      "escalation_human": 0.049,
+      "self_handle": 0.2165,
+      "refuse_out_of_scope": 0.26
+     }
+    },
+    {
+     "case": "rt_join_08",
+     "label": "escalation_human",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0772,
+      "technical_specialist": 0.0247,
+      "billing_specialist": 0.0098,
+      "escalation_human": 0.061,
+      "self_handle": 0.7177,
+      "refuse_out_of_scope": 0.1096
+     }
+    },
+    {
+     "case": "rt_oos_01",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0595,
+      "technical_specialist": 0.0237,
+      "billing_specialist": 0.0259,
+      "escalation_human": 0.0704,
+      "self_handle": 0.6227,
+      "refuse_out_of_scope": 0.1978
+     }
+    },
+    {
+     "case": "rt_oos_02",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0573,
+      "technical_specialist": 0.0393,
+      "billing_specialist": 0.0412,
+      "escalation_human": 0.0425,
+      "self_handle": 0.4376,
+      "refuse_out_of_scope": 0.3822
+     }
+    },
+    {
+     "case": "rt_oos_03",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0324,
+      "technical_specialist": 0.0126,
+      "billing_specialist": 0.0235,
+      "escalation_human": 0.0227,
+      "self_handle": 0.6816,
+      "refuse_out_of_scope": 0.2271
+     }
+    },
+    {
+     "case": "rt_oos_04",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0438,
+      "technical_specialist": 0.0216,
+      "billing_specialist": 0.023,
+      "escalation_human": 0.0185,
+      "self_handle": 0.729,
+      "refuse_out_of_scope": 0.1642
+     }
+    },
+    {
+     "case": "rt_oos_05",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0693,
+      "technical_specialist": 0.0234,
+      "billing_specialist": 0.0926,
+      "escalation_human": 0.0511,
+      "self_handle": 0.4513,
+      "refuse_out_of_scope": 0.3123
+     }
+    },
+    {
+     "case": "rt_oos_06",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0589,
+      "technical_specialist": 0.0209,
+      "billing_specialist": 0.0242,
+      "escalation_human": 0.0343,
+      "self_handle": 0.7062,
+      "refuse_out_of_scope": 0.1554
+     }
+    },
+    {
+     "case": "rt_oos_07",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0534,
+      "technical_specialist": 0.0189,
+      "billing_specialist": 0.0146,
+      "escalation_human": 0.0333,
+      "self_handle": 0.8259,
+      "refuse_out_of_scope": 0.0539
+     }
+    },
+    {
+     "case": "rt_oos_08",
+     "label": "refuse_out_of_scope",
+     "got": "self_handle",
+     "probs": {
+      "triage_agent": 0.0733,
+      "technical_specialist": 0.03,
+      "billing_specialist": 0.091,
+      "escalation_human": 0.0393,
+      "self_handle": 0.4974,
+      "refuse_out_of_scope": 0.269
+     }
+    }
+   ]
+  },
+  "escalate": {
+   "type": "noul",
+   "count": 20,
+   "accuracy@0.5": 0.7,
+   "threshold_sweep": {
+    "0.3": 0.55,
+    "0.4": 0.55,
+    "0.5": 0.7,
+    "0.6": 0.75,
+    "0.7": 0.8
+   },
+   "best_threshold": 0.7,
+   "pos_mean": 0.664,
+   "neg_mean": 0.444,
+   "fp@0.5": [
+    "rt_multi_04",
+    "rt_multi_02",
+    "rt_esc_07",
+    "rt_esc_05",
+    "rt_esc_10"
+   ],
+   "fn@0.5": [
+    "rt_esc_11"
+   ],
+   "clear_acc@0.5": 0.812,
+   "borderline_acc@0.5": 0.25,
+   "sorted_probs": [
+    [
+     "rt_esc_01",
+     0.801,
+     1
+    ],
+    [
+     "rt_esc_09",
+     0.747,
+     1
+    ],
+    [
+     "rt_esc_03",
+     0.746,
+     1
+    ],
+    [
+     "rt_esc_04",
+     0.74,
+     1
+    ],
+    [
+     "rt_multi_01",
+     0.72,
+     1
+    ],
+    [
+     "rt_esc_06",
+     0.676,
+     1
+    ],
+    [
+     "rt_multi_04",
+     0.625,
+     0
+    ],
+    [
+     "rt_multi_02",
+     0.613,
+     0
+    ],
+    [
+     "rt_multi_07",
+     0.604,
+     1
+    ],
+    [
+     "rt_esc_07",
+     0.602,
+     0
+    ],
+    [
+     "rt_multi_05",
+     0.564,
+     1
+    ],
+    [
+     "rt_esc_05",
+     0.547,
+     0
+    ],
+    [
+     "rt_esc_10",
+     0.528,
+     0
+    ],
+    [
+     "rt_multi_08",
+     0.463,
+     0
+    ],
+    [
+     "rt_multi_06",
+     0.452,
+     0
+    ],
+    [
+     "rt_esc_12",
+     0.441,
+     0
+    ],
+    [
+     "rt_esc_11",
+     0.376,
+     1
+    ],
+    [
+     "rt_esc_02",
+     0.335,
+     0
+    ],
+    [
+     "rt_multi_03",
+     0.27,
+     0
+    ],
+    [
+     "rt_esc_08",
+     0.01,
+     0
+    ]
+   ]
+  },
+  "route_confidence": {
+   "type": "score",
+   "count": 40,
+   "accuracy_within_1": 0.9,
+   "exact_match_rounded": 0.4,
+   "mae_raw": 0.631,
+   "error_distribution_rounded": {
+    "-1": 4,
+    "0": 16,
+    "1": 16,
+    "2": 4
+   },
+   "miss_examples": [
+    {
+     "case": "rt_esc_10",
+     "label": 0,
+     "got": 1.7327
+    },
+    {
+     "case": "rt_multi_02",
+     "label": 0,
+     "got": 1.5794
+    },
+    {
+     "case": "rt_join_05",
+     "label": 0,
+     "got": 1.7464
+    },
+    {
+     "case": "rt_oos_04",
+     "label": 0,
+     "got": 1.6621
+    }
+   ]
+  }
+ }
+}
