@@ -152,3 +152,15 @@ choice confusion matrix, score MAE, consistency check) generalizes as-is.
 - **Highly deterministic** at these decision points — safe for automated gating — but
   calibrate on real, labeled data from your own domain first.
 - Alpha endpoint: fine for piloting; check the direct TypeSafe API for production.
+
+## Dataset validation
+
+Validate `dataset.json` (dry-run by default — validates and prints stats, writes nothing):
+
+    python3 validate_dataset.py
+
+Options: `--dataset PATH` (default `dataset.json`), `--output PATH` (write the
+validation report to a file — the only write path), `--dry-run` (no-op alias).
+Exit code 0 = valid dataset; 1 = missing file, invalid JSON, or validation
+failure (missing/empty required fields, duplicate ids, labels outside the
+question-spec criteria).
