@@ -1,6 +1,6 @@
 {
   "name": "jev-1.13-mini-bench",
-  "version": "1.0",
+  "version": "1.2",
   "domain": "support_triage",
   "notes": "Labels are author-assigned ground truth. 'clear': true = label follows strongly from the text; false = borderline judgment call. Criterion wording fixes the label semantics.",
   "question_specs": {
